@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Southbound API Specifications | RDKE</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="accent"></div>
+<header class="nav"><a class="brand" href="index.html"><img src="RDK-logo.png" alt="RDK"></a><nav class="navlinks"><a class="" href="index.html">Home</a><a class="" href="component-registry.html">Components Catalog</a><a class="" href="northbound-apis.html">Northbound API Spec</a><a class="active" href="southbound-apis.html">Southbound API Spec</a><a class="" href="hardware-specifications.html">Hardware specifications</a></nav></header>
+<main>
+<section class="hero" style="height:clamp(360px,32vw,440px);min-height:360px;padding:52px 5vw 42px;display:flex;align-items:center;overflow:visible"><div class="wrap" style="width:100%"><div class="eyebrow" style="font-size:1.1rem;letter-spacing:.08em">Interface catalog</div><h1 style="font-size:clamp(1.9rem,3.6vw,3.5rem)">Southbound API Specifications</h1><p>The Hardware Abstraction Layer (HAL) between middleware and the vendor layer — standardized interfaces that abstract hardware differences.</p></div></section><style>@media(max-width:650px){.hero{height:auto!important;min-height:0!important;padding:48px 20px 44px!important}.hero h1{font-size:clamp(1.9rem,9vw,2.8rem)!important}.hero p{font-size:1rem!important;line-height:1.5}.hero .badges{margin-top:18px}}</style><section class="section"><div class="notice"><strong>Catalog Status: Draft</strong><br>This page contains an evolving list of Southbound API components. The current list is a draft and will continue to be updated.</div><div class="toolbar"><input id="southbound-search" type="search" placeholder="Search Southbound APIs" aria-label="Search Southbound APIs"></div><div class="table-wrap" style="margin-top:24px"><table><thead><tr><th>HAL interface</th><th>Version</th><th>Source</th></tr></thead><tbody id="southbound-rows"></tbody></table></div></section><script>const DATA=[["Bluetooth HAL", "", ""], ["Control Manager HAL", "develop", "https://github.com/rdkcentral/control"], ["Crypto HAL", "", ""], ["DeepSleep Manager HAL", "develop", "https://github.com/rdkcentral/rdk-halif-deepsleep_manager"], ["Device Settings HAL", "develop", "https://github.com/rdkcentral/rdk-halif-device_settings"], ["Graphics & Matrix HAL", "", ""], ["HDMI CEC HAL", "develop", "https://github.com/rdkcentral/rdk-halif-hdmi_cec"], ["MFRLib HAL", "", ""], ["Power Manager HAL", "develop", "https://github.com/rdkcentral/rdk-halif-power_manager"], ["RMF Audio Capture HAL", "develop", "https://github.com/rdkcentral/rdk-halif-rmf_audio_capture"], ["Sysint HAL", "", ""], ["systemaudioplatform HAL", "", ""], ["Westeros SOC HAL", "", ""]];const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};const search=document.querySelector('#southbound-search');const render=()=>{const q=search.value.toLowerCase();const rows=DATA.filter(item=>item.join(' ').toLowerCase().includes(q));document.querySelector('#southbound-rows').innerHTML=rows.length?rows.map(item=>`<tr><td style="white-space:pre-line">${esc(item[0])}</td><td style="white-space:pre-line">${esc(item[1])}</td><td style="white-space:pre-line"><a href="${esc(item[2])}" target="_blank" rel="noopener">${esc(item[2])}</a></td></tr>`).join(''):'<tr><td class="empty" colspan="3">No matching records.</td></tr>'};search.addEventListener('input',render);render()</script>
+</main>
+
+</body>
+</html>
