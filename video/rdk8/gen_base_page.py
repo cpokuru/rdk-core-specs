@@ -33,7 +33,7 @@ def build_home() -> None:
     body = hero("", content["title"], content["description"], content["badges"], include_release=False)
     title_html = '<h1 style="font-size:clamp(1.9rem,3.6vw,3.5rem)">' + esc(content["title"]) + '</h1>'
     subtitle_html = '<div class="hero-subtitle" style="font-size:.95rem;font-weight:600;line-height:1;color:#b8df63;margin:0">Powering Next-Generation Entertainment Experiences</div>'
-    intro_html = f'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;line-height:1"><div style="display:inline-flex;align-items:center;padding:5px 12px;border:1px solid #b8df63;border-radius:999px;color:#b8df63;font:700 .72rem/1 Consolas,monospace;letter-spacing:.14em">RDKE</div><div style="font-size:.95rem;font-weight:600;line-height:1;color:#b8df63">RDK8 for Video</div>{subtitle_html}</div>'
+    intro_html = f'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;line-height:1"><div style="display:inline-flex;align-items:center;padding:5px 12px;border:1px solid #b8df63;border-radius:999px;color:#b8df63;font:700 .72rem/1 JetBrains Mono,monospace;letter-spacing:.14em">RDKE</div><div style="font-size:.95rem;font-weight:600;line-height:1;color:#b8df63">RDK8 for Video</div>{subtitle_html}</div>'
     body = body.replace(title_html, intro_html + title_html, 1)
     why = content["why"]
     body += f'''<section class="section"><div class="eyebrow">RDKE overview</div><h2>{esc(why["title"])}</h2><p class="lede">{esc(why["description"])}</p>{cards(why["cards"])}</section>'''

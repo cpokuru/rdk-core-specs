@@ -52,6 +52,12 @@ def shell(title: str, active: str, body: str, footer: str = "") -> str:
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>body{{font-family:"Inter",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}}h1,h2,h3{{font-family:"Space Grotesk","Inter",sans-serif}}code,.mono,.release-pill{{font-family:"JetBrains Mono",ui-monospace,monospace!important}}</style>
+<style>.hero .wrap{{max-width:none}}</style>
+<style>@media(max-width:650px){{.hero{{height:auto!important;min-height:0!important;padding:48px 20px 44px!important}}.hero h1{{font-size:clamp(1.9rem,9vw,2.8rem)!important}}.hero p{{font-size:1rem!important;line-height:1.5}}.hero .badges{{margin-top:18px}}}}</style>
 </head>
 <body>
 {nav(active)}
@@ -70,7 +76,7 @@ def hero(eyebrow: str, title: str, description: str, badges: list[str] | None = 
     ) + "</div>"
     eyebrow_html = f'<div class="eyebrow" style="font-size:1.1rem;letter-spacing:.08em">{esc(eyebrow)}</div>' if eyebrow else ""
     subtitle_html = f'<div class="hero-subtitle" style="font-size:.95rem;font-weight:600;color:#b8df63;margin:-4px 0 18px">{esc(subtitle)}</div>' if subtitle else ""
-    return f'''<section class="hero" style="height:clamp(360px,32vw,440px);min-height:360px;padding:52px 5vw 42px;display:flex;align-items:center;overflow:visible"><div class="wrap" style="width:100%">{eyebrow_html}<h1 style="font-size:clamp(1.9rem,3.6vw,3.5rem)">{esc(title)}</h1>{subtitle_html}<p>{esc(description)}</p>{badge_html}</div></section><style>@media(max-width:650px){{.hero{{height:auto!important;min-height:0!important;padding:48px 20px 44px!important}}.hero h1{{font-size:clamp(1.9rem,9vw,2.8rem)!important}}.hero p{{font-size:1rem!important;line-height:1.5}}.hero .badges{{margin-top:18px}}}}</style>'''
+    return f'''<section class="hero" style="height:clamp(360px,32vw,440px);min-height:360px;padding:52px 5vw 42px;display:flex;align-items:center;overflow:visible"><div class="wrap" style="width:100%">{eyebrow_html}<h1 style="font-size:clamp(1.9rem,3.6vw,3.5rem)">{esc(title)}</h1>{subtitle_html}<p>{esc(description)}</p>{badge_html}</div></section>'''
 
 
 def cards(items: list[list[str]]) -> str:
