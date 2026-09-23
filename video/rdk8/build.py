@@ -81,6 +81,10 @@ def shell(title: str, active: str, body: str, footer: str = "") -> str:
 '''
 
 
+def status_explainer() -> str:
+    return '''<details style="position:relative;min-width:150px"><summary style="cursor:pointer;color:#2457d6;font-size:.84rem;font-weight:700">Status legend</summary><dl style="position:absolute;z-index:2;right:0;top:calc(100% + 8px);width:min(420px,calc(100vw - 40px));margin:0;padding:16px 18px;border:1px solid var(--border);border-radius:6px;background:#fff;box-shadow:var(--shadow);font-size:.84rem;line-height:1.45"><dt style="font-weight:700;color:var(--ink)">Draft</dt><dd style="margin:2px 0 10px;color:var(--muted)">Specifications drafted and undergoing internal reviews and RTAB Approval</dd><dt style="font-weight:700;color:var(--ink)">Approved</dt><dd style="margin:2px 0 10px;color:var(--muted)">All review feedback has been addressed; RTAB has voted and approved the spec</dd><dt style="font-weight:700;color:var(--ink)">Published</dt><dd style="margin:2px 0 0;color:var(--muted)">Tagged and versioned against an official RDK release</dd></dl></details>'''
+
+
 def hero(eyebrow: str, title: str, description: str, badges: list[str] | None = None, subtitle: str = "", subtitle_before_title: bool = False, include_release: bool = True) -> str:
     badge_html = "" if not badges else '<div class="badges">' + "".join(
         f'<span class="badge">{esc(item)}</span>' for item in badges
@@ -154,6 +158,7 @@ def build_api(
     pill_fields: list[str] | None = None,
     strip_release_path: bool = False,
     show_version: bool = True,
+    show_status_explainer: bool = True,
 ) -> None:
     data = load(data_file)
     records = data.get("apis", [])
@@ -188,7 +193,9 @@ def build_api(
         )
     table_body = f'''<div class="table-wrap" style="margin-top:24px"><table><thead><tr>{column_html}</tr></thead><tbody id="{table_id}">{rows}</tbody></table></div>'''
     note = f'<aside role="note" aria-label="Note" style="width:100%;margin:0 0 20px;padding:14px 18px;border:1px solid #edcf7a;border-left:4px solid #b45309;border-radius:8px;background:#fff4d8;color:#8a5a00;font-size:.92rem;line-height:1.5;box-shadow:var(--shadow);"><strong style="display:block;margin-bottom:4px;color:#8a5a00;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;">Note</strong><span style="display:block;max-width:900px;">{esc(draft_note)}</span></aside>' if draft_note else ""
-    body = hero("Interface catalog", title, description, include_release=False) + f'''<section class="section"><div class="api-controls">{release_panel("RDK8 list state", data, show_version)}{search}</div>{note}{table_body}</section>'''
+    status_html = status_explainer() if show_status_explainer else ""
+    status_block = f'<div class="api-status" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">{release_panel("RDK8 list state", data, show_version)}{status_html}</div>'
+    body = hero("Interface catalog", title, description, include_release=False) + f'''<section class="section"><div class="api-controls">{status_block}{search}</div>{note}{table_body}</section>'''
     body += script
     (ROOT / output_file).write_text(shell(f"{title} | RDK8", active, body), encoding="utf-8")
 

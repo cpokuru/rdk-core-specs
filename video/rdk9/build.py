@@ -45,6 +45,7 @@ def nav(active: str) -> str:
 
 def shell(title: str, active: str, body: str, footer: str = "") -> str:
     footer_html = f'<footer class="footer"><div class="wrap">{footer}</div></footer>' if footer else ""
+    control_styles = '<style>.api-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,auto);align-items:center;gap:20px;margin-bottom:24px}.api-controls>.toolbar{justify-self:end;min-width:260px}@media(max-width:760px){.api-controls{grid-template-columns:1fr}.api-controls>.toolbar{justify-self:stretch;min-width:0}}</style>' if active != "home" else ""
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -57,7 +58,7 @@ def shell(title: str, active: str, body: str, footer: str = "") -> str:
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>body{{font-family:"Inter",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}}h1,h2,h3{{font-family:"Space Grotesk","Inter",sans-serif}}code,.mono,.release-pill{{font-family:"JetBrains Mono",ui-monospace,monospace!important}}</style>
 <style>.hero .wrap{{max-width:none}}</style>
-<style>@media(max-width:650px){{.hero{{height:auto!important;min-height:0!important;padding:48px 20px 44px!important}}.hero h1{{font-size:clamp(1.9rem,9vw,2.8rem)!important}}.hero p{{font-size:1rem!important;line-height:1.5}}.hero .badges{{margin-top:18px}}}}</style>
+<style>@media(max-width:650px){{.hero{{height:auto!important;min-height:0!important;padding:48px 20px 44px!important}}.hero h1{{font-size:clamp(1.9rem,9vw,2.8rem)!important}}.hero p{{font-size:1rem!important;line-height:1.5}}.hero .badges{{margin-top:18px}}}}</style>{control_styles}
 </head>
 <body>
 {nav(active)}
@@ -68,6 +69,10 @@ def shell(title: str, active: str, body: str, footer: str = "") -> str:
 </body>
 </html>
 '''
+
+
+def status_explainer() -> str:
+    return '''<details style="position:relative;min-width:150px"><summary style="cursor:pointer;color:#2457d6;font-size:.84rem;font-weight:700">Status legend</summary><dl style="position:absolute;z-index:2;right:0;top:calc(100% + 8px);width:min(420px,calc(100vw - 40px));margin:0;padding:16px 18px;border:1px solid var(--border);border-radius:6px;background:#fff;box-shadow:var(--shadow);font-size:.84rem;line-height:1.45"><dt style="font-weight:700;color:var(--ink)">Draft</dt><dd style="margin:2px 0 10px;color:var(--muted)">Specifications drafted and undergoing internal reviews and RTAB Approval</dd><dt style="font-weight:700;color:var(--ink)">Approved</dt><dd style="margin:2px 0 10px;color:var(--muted)">All review feedback has been addressed; RTAB has voted and approved the spec</dd><dt style="font-weight:700;color:var(--ink)">Published</dt><dd style="margin:2px 0 0;color:var(--muted)">Tagged and versioned against an official RDK release</dd></dl></details>'''
 
 
 def hero(eyebrow: str, title: str, description: str, badges: list[str] | None = None, subtitle: str = "") -> str:
@@ -140,7 +145,8 @@ def build_api(
             for item in ordered_records
         )
     table_body = f'''<div class="table-wrap" style="margin-top:24px"><table><thead><tr>{column_html}</tr></thead><tbody id="{table_id}">{rows}</tbody></table></div>'''
-    body = hero("Interface catalog", title, description) + f'''<section class="section"><div class="notice"><strong>Catalog Status: Draft</strong><br>{esc(draft_note)}</div>{search}{table_body}</section>'''
+    status_badge = '<span style="display:inline-flex;align-items:center;padding:9px 14px;border:1px solid #edcf7a;border-radius:5px;background:#fff4d8;color:#8a5a00;font:700 .75rem/1 JetBrains Mono,monospace;letter-spacing:.04em"><span style="color:#9a731f;font-weight:600;margin-right:6px">Catalog status:</span> Draft</span>'
+    body = hero("Interface catalog", title, description) + f'''<section class="section"><div class="api-controls"><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">{status_badge}{status_explainer()}</div>{search}</div><div class="notice" style="margin:0 0 24px"><strong>Note</strong><br>{esc(draft_note)}</div>{table_body}</section>'''
     body += script
     (ROOT / output_file).write_text(shell(f"{title} | RDKE", active, body), encoding="utf-8")
 
