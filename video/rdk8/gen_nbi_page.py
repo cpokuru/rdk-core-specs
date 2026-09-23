@@ -42,6 +42,7 @@ def build_northbound() -> None:
         empty_message="No Northbound APIs have been loaded.",
         sort_field="component",
         show_version=False,
+        show_status_explainer=True,
         draft_note="Phase I - Core Defined: the first Firebolt API specification release is published for development preview and early validation of RDK8's standardized, versioned app API layer.",
     )
 
